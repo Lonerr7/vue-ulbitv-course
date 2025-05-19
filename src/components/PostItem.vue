@@ -22,11 +22,20 @@ export default {
     <p class="post__body">
       <span class="strong">Описание:</span> {{ post.body }}
     </p>
+    <p>{{ post.id }}</p>
     <MyButton
-      style="background-color: rgb(145, 45, 45); width: 100px"
+      style="
+        background-color: rgb(145, 45, 45);
+        width: 100px;
+        margin-right: 20px;
+      "
       @click="deletePost"
     >
       Удалить
+    </MyButton>
+
+    <MyButton style="background-color: rgb(109, 173, 171); max-width: 200px" @click="$router.push(`/posts/${post.id}`)">
+      Перейти к посту
     </MyButton>
   </li>
 </template>

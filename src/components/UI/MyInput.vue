@@ -17,29 +17,24 @@ export default {
 </script>
 
 <template>
-  <div class="inputBox">
-    <input
-      class="input"
-      type="text"
-      v-bind="$attrs"
-      :value="modelValue"
-      @input="updateInput"
-    />
-  </div>
+  <input
+    class="input"
+    type="text"
+    v-bind="$attrs"
+    :value="modelValue"
+    @input="updateInput"
+  />
 </template>
 
 <style scoped>
-.inputBox {
-  margin-bottom: 20px;
-}
-
-.inputBox:last-child {
-  margin-bottom: 0;
-}
-
 .input {
   padding: 8px 10px;
   width: 100%;
   border-radius: 5px;
+  margin-bottom: 20px;
+}
+
+.input:last-child {
+  margin-bottom: 0;
 }
 </style>

@@ -29,7 +29,7 @@ export default {
   <form class="form">
     <h3 class="form__title">Создание поста</h3>
 
-    <MyInput placeholder="Название" v-model="post.title" />
+    <MyInput v-focus placeholder="Название" v-model="post.title" />
     <MyInput placeholder="Описание" v-model="post.body" />
     <MyButton style="padding: 10px; width: 100%" @click.prevent="createPost">
       Создать
