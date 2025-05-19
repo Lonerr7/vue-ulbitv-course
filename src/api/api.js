@@ -5,5 +5,6 @@ const axiosInstance = axios.create({
 });
 
 export const api = {
-  fetchPosts: async () => await axiosInstance.get('posts?_limit=10'),
+  fetchPosts: async (limit = 10, page = 1) =>
+    await axiosInstance.get(`posts?_limit=${limit}&_page=${page}`),
 };

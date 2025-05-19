@@ -2,6 +2,7 @@
 import { api } from './api/api';
 import PostForm from './components/PostForm.vue';
 import PostList from './components/PostList.vue';
+import PagesNumList from './components/Pagination/PagesNumList.vue';
 
 export default {
   data() {
@@ -11,10 +12,15 @@ export default {
       isPostsLoading: false,
       isPostsLoadingSuccess: false,
       selectedSort: '',
+      searchPostText: '',
       sortOptions: [
         { value: 'title', name: 'По названию' },
         { value: 'body', name: 'По содержимому' },
       ],
+
+      currentPage: 1,
+      limit: 10,
+      totalPages: 0,
     };
   },
   methods: {
@@ -31,7 +37,12 @@ export default {
     async getPosts() {
       try {
         this.isPostsLoading = true;
-        const { data } = await api.fetchPosts();
+        const { data, headers } = await api.fetchPosts(
+          this.limit,
+          this.currentPage
+        );
+        this.totalPages = Math.ceil(+headers['x-total-count'] / this.limit);
+
         this.posts = data;
         this.isPostsLoadingSuccess = true;
       } catch (error) {
@@ -40,11 +51,34 @@ export default {
         this.isPostsLoading = false;
       }
     },
+    changePage(newPage) {
+      this.currentPage = newPage;
+      window.scrollTo(0, 0);
+    },
   },
   mounted() {
     this.getPosts();
   },
-  components: { PostForm, PostList },
+  computed: {
+    sortedPosts() {
+      return [...this.posts].sort((post1, post2) => {
+        return post1[this.selectedSort]?.localeCompare(
+          post2[this.selectedSort]
+        );
+      });
+    },
+    sortedAndSearchedPosts() {
+      return this.sortedPosts.filter((post) =>
+        post.title.includes(this.searchPostText)
+      );
+    },
+  },
+  watch: {
+    currentPage() {
+      this.getPosts();
+    },
+  },
+  components: { PostForm, PostList, PagesNumList },
 };
 </script>
 
@@ -64,10 +98,17 @@ export default {
         <PostForm @create="createPost" />
       </MyDialog>
 
+      <MyInput v-model="searchPostText" />
       <PostList
-        :posts="posts"
+        :posts="sortedAndSearchedPosts"
         @removePost="removePost"
         v-if="isPostsLoadingSuccess"
+      />
+
+      <PagesNumList
+        :totalPagesCount="totalPages"
+        :currentPage="currentPage"
+        @changePage="changePage"
       />
       <p v-if="isPostsLoading">Loading...</p>
     </div>

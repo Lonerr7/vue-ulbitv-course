@@ -21,7 +21,7 @@ export default {
 </script>
 
 <template>
-  <div>
+  <div class="postList__wrapper">
     <div v-if="posts.length">
       <h2 class="title">Список постов</h2>
       <ul>
@@ -42,6 +42,10 @@ export default {
   text-align: center;
   margin-bottom: 15px;
   font-size: 24px;
+}
+
+.postList__wrapper {
+  margin-bottom: 20px;
 }
 
 .error {

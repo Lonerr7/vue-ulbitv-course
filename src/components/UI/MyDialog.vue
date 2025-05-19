@@ -23,12 +23,12 @@ export default {
 
 <style scoped>
 .dialog {
-  padding: 10px;
+  padding: 20px;
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  background: rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
 }
 
 .dialog__inner {
