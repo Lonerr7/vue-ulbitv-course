@@ -13,7 +13,7 @@ export default {
       console.log(entries);
 
       if (entries[0].isIntersecting) {
-        binding.value(true);
+        binding.value();
       }
     };
 
